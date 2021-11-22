@@ -1,0 +1,27 @@
+{
+  "name": "@ppzp/resh-alifc",
+  "version": "0.0.0",
+  "description": "阿里云函数计算框架",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppz-pro/resh-alifc.git"
+  },
+  "keywords": [
+    "ali",
+    "web",
+    "serverless"
+  ],
+  "author": "gy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppz-pro/resh-alifc/issues"
+  },
+  "homepage": "https://github.com/ppz-pro/resh-alifc#readme",
+  "dependencies": {
+    "@ppzp/http-router": "^0.1.1"
+  }
+}
