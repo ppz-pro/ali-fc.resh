@@ -1,11 +1,10 @@
 const App = require('@ppzp/resh-alifc')
 
-const app = new App({
-
+const app = new App()
+app.router.get('/test', function() {
+  return {
+    success: true
+  }
 })
-
-app.router.setChildren([
-  require('./test')
-])
 
 module.exports = app

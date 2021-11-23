@@ -1,30 +1,31 @@
 const Router = require('@ppzp/http-router')
-const defaults = require('lodash/defaults')
-const bindAll = require('lodash/bindAll')
 const Context = require('./context')
 const returnData = require('./breads/return-data')
+const { defaults, bind, promiseAll } = require('@ppzp/utils')
 
 module.exports = class ReshAliFC {
   constructor(options) {
     options = defaults(options, {
-      Context,
-      breads: [],
       returnData: true,
+      breads: [],
+      onInit: [],
+      Context,
     })
     
     if(options.returnData)
       options.breads.unshift(returnData)
-    this.__init = options.init
-    this.__Context = options.Context
+    this.__onInit = options.onInit
+    this.__Context = options.Context || Context
 
     this.router = new Router(options)
-
     if(options.controllers)
       this.router.setChildren(options.controllers)
 
-    bindAll(this, [
-      'handler', 'initializer'
-    ])
+    bind(this, 'handler', 'initializer')
+  }
+
+  onInit(cb) {
+    this.__onInit.push(cb)
   }
 
   handler(req, res, aliContext) {
@@ -41,8 +42,7 @@ module.exports = class ReshAliFC {
   }
 
   async initializer(aliContext, callback) {
-    if(this.__init)
-      await this.__init()
+    await promiseAll(this.__onInit)
     this.router.makeSandwich()
 
     callback(null)
