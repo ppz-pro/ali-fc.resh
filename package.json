@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/ppz-pro/resh-alifc#readme",
   "dependencies": {
-    "@ppzp/http-router": "^0.1.1",
-    "@ppzp/utils": "file:../utils.js/ppzp-utils-0.0.0.tgz"
+    "@ppzp/http-router": "^0.1.3",
+    "@ppzp/utils": "0.0.0"
   }
 }
