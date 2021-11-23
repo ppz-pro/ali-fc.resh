@@ -19,6 +19,9 @@ module.exports = class ReshAliFC {
 
     this.router = new Router(options)
 
+    if(options.controllers)
+      this.router.setChildren(options.controllers)
+
     bindAll(this, [
       'handler', 'initializer'
     ])

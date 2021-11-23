@@ -3,6 +3,7 @@ const model = require('./model')
 const controllers = require('./controller')
 
 const app = new App({
+  controllers,
   async init() {
     try {
       await model.client.connect()
@@ -12,7 +13,5 @@ const app = new App({
     }
   }
 })
-
-app.router.setChildren(controllers)
 
 module.exports = app

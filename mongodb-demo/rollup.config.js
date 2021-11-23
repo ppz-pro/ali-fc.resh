@@ -10,7 +10,9 @@ export default {
     exports: 'auto'
   },
   plugins: [
-    nodeResolve(),
+    nodeResolve({
+      preferBuiltins: true
+    }),
     commonjs(),
     json()
   ]
