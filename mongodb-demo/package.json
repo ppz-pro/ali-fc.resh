@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@ppzp/resh-alifc": "file:../ppzp-resh-alifc-0.0.0.tgz",
+    "@ppzp/utils": "0.0.0",
     "mongodb": "^4.2.0"
   },
   "devDependencies": {

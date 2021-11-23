@@ -21,6 +21,12 @@ module.exports = class ReshAliFC {
     if(options.controllers)
       this.router.setChildren(options.controllers)
 
+
+    if(options.model)
+    this.onInit(function() {
+      return options.model.init()
+    })
+
     bind(this, 'handler', 'initializer')
   }
 
@@ -28,12 +34,12 @@ module.exports = class ReshAliFC {
     this.__onInit.push(cb)
   }
 
-  handler(req, res, aliContext) {
+  async handler(req, res, aliContext) {
     const $ = new this.__Context(req, res, aliContext)
     const handler = this.router.getHandler(req.method, req.path)
     if(handler)
       try {
-        handler($)
+        await handler($)
       } catch(e) {
         $.handle500(res, e)
       }
