@@ -6,4 +6,3 @@ npm install @ppzp/resh-alifc
 
 ##### TODO
 + mongo 重新连接
-+ context 取数据与参数
