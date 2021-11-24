@@ -3,7 +3,7 @@
     "dist": "rollup --config"
   },
   "dependencies": {
-    "@ppzp/resh-alifc": "file:../../ppzp-resh-alifc-0.0.0.tgz",
+    "@ppzp/resh-alifc": "0.0.1",
     "@ppzp/utils": "0.0.0",
     "mongodb": "^4.2.0"
   },
