@@ -10,15 +10,16 @@ module.exports = class Context {
     this.res.send(JSON.stringify(data))
   }
 
-  handle404(res) {
-    res.setStatusCode(404)
-    res.send('404')
+  handle404() {
+    console.error(`[404] ${this.req.method} ${this.req.path}`)
+    this.res.setStatusCode(404)
+    this.res.send('404')
   }
-  
-  handle500(res, e) {
+
+  handle500(e) {
     console.error('服务器内部错误')
     console.error(e)
-    res.setStatusCode(500)
-    res.send('500')
+    this.res.setStatusCode(500)
+    this.res.send('500')
   }
 }

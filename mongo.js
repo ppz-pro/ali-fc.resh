@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb')
 const defaults = require('@ppzp/utils/defaults')
+const Context = require('./context')
 
 const BaseCollection = exports.BaseCollection = class {
   /** @param {import('mongodb').Db} db */
@@ -59,22 +60,32 @@ exports.Model = class {
     this.client = new MongoClient(url)
     
     this.__db = this.client.db(options.dbName)
-    if(options.log)
-      this.Log = new LogCollection(this.__db, 'log')
+    if(options.log) {
+      const Log = this.Log = new LogCollection(this.__db, 'log')
+      Context.prototype.handle404 = async function() {
+        await Log.error(`[404] ${this.req.method} ${this.req.path}`)
+        this.res.setStatusCode(404)
+        this.res.send('404')
+      }
+      Context.prototype.handle500 = async function(e) {
+        await Log.error('服务器内部错误', e)
+        this.res.setStatusCode(500)
+        this.res.send('500')
+      }
+    }
   }
 
   async init() {
     try {
       await this.client.connect()
-      if(this.Log)
-        this.Log.info('mongo 连接建立成功')
-        .then(() => {
-          console.log('日志开始记录到 mongodb 里')
-        })
     } catch(e) {
       // 未建立连接，不能使用 this.Log
-      console.error('mongo 连接建立失败')
       console.error(e)
+      throw new Error('mongo 连接建立失败\n' + e)
+    }
+    if(this.Log) {
+      await this.Log.info('mongo 连接建立成功')  
+      console.log('日志开始记录到 mongodb 里')
     }
   }
 }

@@ -21,7 +21,6 @@ module.exports = class ReshAliFC {
     if(options.controllers)
       this.router.setChildren(options.controllers)
 
-
     if(options.model)
     this.onInit(function() {
       return options.model.init()
@@ -41,16 +40,20 @@ module.exports = class ReshAliFC {
       try {
         await handler($)
       } catch(e) {
-        $.handle500(res, e)
+        $.handle500(e)
       }
     else
-      $.handle404(res)
+      $.handle404()
   }
 
   async initializer(aliContext, callback) {
-    await promiseAll(this.__onInit)
-    this.router.makeSandwich()
-
-    callback(null)
+    try {
+      await promiseAll(this.__onInit)
+      this.router.makeSandwich()
+      callback()
+    } catch(e) {
+      console.error('初始化出现异常')
+      callback(e)
+    }
   }
 }

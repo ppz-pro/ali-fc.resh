@@ -5,6 +5,5 @@ npm install @ppzp/resh-alifc
 [皮皮仔宣言](https://github.com/ppz-pro/declaration)
 
 ##### TODO
-+ mongo 关闭连接
-+ mongo 捕捉异常，写入库
++ mongo 重新连接
 + context 取数据与参数
