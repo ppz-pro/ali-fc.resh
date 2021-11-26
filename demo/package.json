@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "dist": "rollup --config"
+    "dist-basic": "rollup basic/index.js --config",
+    "dist-mongo": "rollup mongo/index.js --config"
   },
   "dependencies": {
-    "@ppzp/resh-alifc": "0.0.1",
-    "@ppzp/utils": "0.0.0",
+    "@ppzp/resh-alifc": "0.0.2",
     "mongodb": "^4.2.0"
   },
   "devDependencies": {

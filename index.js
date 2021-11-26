@@ -1,4 +1,4 @@
-const Router = require('@ppzp/http-router')
+const Controller = require('@ppzp/controller')
 const Context = require('./context')
 const returnData = require('./breads/return-data')
 const { defaults, bind, promiseAll } = require('@ppzp/utils')
@@ -15,16 +15,16 @@ module.exports = class ReshAliFC {
     if(options.returnData)
       options.breads.unshift(returnData)
     this.__onInit = options.onInit
-    this.__Context = options.Context || Context
+    this.__Context = options.Context
 
-    this.router = new Router(options)
+    this.controller = new Controller(options)
     if(options.controllers)
-      this.router.setChildren(options.controllers)
+      this.controller.setChildren(options.controllers)
 
     if(options.model)
-    this.onInit(function() {
-      return options.model.init()
-    })
+      this.onInit(function() {
+        return options.model.init()
+      })
 
     bind(this, 'handler', 'initializer')
   }
@@ -35,7 +35,7 @@ module.exports = class ReshAliFC {
 
   async handler(req, res, aliContext) {
     const $ = new this.__Context(req, res, aliContext)
-    const handler = this.router.getHandler(req.method, req.path)
+    const handler = this.controller.getHandler(req.method, req.path)
     if(handler)
       try {
         await handler($)
@@ -49,7 +49,7 @@ module.exports = class ReshAliFC {
   async initializer(aliContext, callback) {
     try {
       await promiseAll(this.__onInit)
-      this.router.makeSandwich()
+      this.controller.makeSandwich()
       callback()
     } catch(e) {
       console.error('初始化出现异常')

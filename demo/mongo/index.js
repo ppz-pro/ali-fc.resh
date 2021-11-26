@@ -5,7 +5,7 @@ const app = new App({
   model
 })
 
-app.router.post('/user', async () =>
+app.controller.post('/user', async () =>
   model.User.insert({
     name: 'ppz',
     tel: 1762
